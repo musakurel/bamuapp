@@ -48,6 +48,7 @@ export default function PointsDetailPage() {
               ) : null}
               <input
                 type="text"
+                key={point.id}
                 name="name"
                 defaultValue={point.name}
                 className={inputClassName}
@@ -62,6 +63,7 @@ export default function PointsDetailPage() {
               ) : null}
               <input
                 type="text"
+                key={point.id}
                 name="adress"
                 defaultValue={point.adress}
                 className={inputClassName}
@@ -77,6 +79,8 @@ export default function PointsDetailPage() {
               <input
                 type="text"
                 name="city"
+                                key={point.id}
+
                 defaultValue={point?.city}
                 className={inputClassName}
               ></input>
@@ -92,6 +96,7 @@ export default function PointsDetailPage() {
                 type="text"
                 pattern="[0-9]*"
                 name="tel"
+                key={point.id}
                 defaultValue={point?.tel}
                 className={inputClassName}
               ></input>
