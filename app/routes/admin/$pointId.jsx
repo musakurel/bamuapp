@@ -93,7 +93,7 @@ export default function PointsDetailPage() {
                 <em className="text-red-600">{errors.tel} </em>
               ) : null}
               <input
-                type="text "
+                type="text"
                 pattern="[0-9]*"
                 name="tel"
                 key={point.id}
