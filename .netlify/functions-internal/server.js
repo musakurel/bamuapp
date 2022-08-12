@@ -1338,6 +1338,9 @@ async function getProduct({ id }) {
 async function createProduct({ name, imageSlug }) {
   return prisma.product.create({ data: { name, imageSlug } });
 }
+async function updateProduct({ id, name, imageSlug }) {
+  return prisma.product.update({ where: { id }, data: { name, imageSlug } });
+}
 
 // app/routes/admin.jsx
 var loader9 = async () => (0, import_node11.json)({
@@ -1396,40 +1399,57 @@ function Admin() {
 // app/routes/admin/products/$productId.jsx
 var productId_exports = {};
 __export(productId_exports, {
+  action: () => action4,
   default: () => ProductId,
   loader: () => loader10
 });
-var import_react18 = require("@remix-run/react"), import_server_runtime = require("@remix-run/server-runtime"), import_react19 = __toESM(require("react"));
+var import_react18 = require("@remix-run/react"), import_node12 = require("@remix-run/node"), import_react19 = __toESM(require("react"));
 var loader10 = async ({ request, params }) => {
   let product = await getProduct({ id: parseInt(params.productId) });
-  return (0, import_server_runtime.json)({ product });
+  return (0, import_node12.json)({ product });
+}, action4 = async ({ request, params }) => {
+  let formData = await request.formData(), name = formData.get("name"), imageSlug = formData.get("imageSlug"), id = parseInt(params.productId);
+  return await updateProduct({ id, name, imageSlug }), (0, import_node12.redirect)("/admin");
 };
 function ProductId() {
-  let { product } = (0, import_react18.useLoaderData)();
-  return /* @__PURE__ */ import_react19.default.createElement("div", null, " ", "Product SLug", /* @__PURE__ */ import_react19.default.createElement("input", {
+  var _a;
+  let { product } = (0, import_react18.useLoaderData)(), isUpdating = ((_a = (0, import_react18.useTransition)().submission) == null ? void 0 : _a.formData.get("intent")) === "update";
+  return /* @__PURE__ */ import_react19.default.createElement("div", null, " ", "Product Details", /* @__PURE__ */ import_react19.default.createElement(import_react18.Form, {
+    method: "post"
+  }, /* @__PURE__ */ import_react19.default.createElement("div", {
+    className: "xs:w-full mb-6 grid w-1/2 gap-6 sm:w-full md:w-full md:grid-cols-2 lg:w-1/2 "
+  }, /* @__PURE__ */ import_react19.default.createElement("label", null, "Product Name:", " ", /* @__PURE__ */ import_react19.default.createElement("input", {
     type: "text",
+    key: product == null ? void 0 : product.id,
     name: "name",
     defaultValue: product == null ? void 0 : product.name,
     className: inputClassName
-  }), /* @__PURE__ */ import_react19.default.createElement("input", {
+  })), /* @__PURE__ */ import_react19.default.createElement("label", null, "imageSlug:", " ", /* @__PURE__ */ import_react19.default.createElement("input", {
     type: "text",
+    key: product == null ? void 0 : product.id,
     name: "imageSlug",
     defaultValue: product == null ? void 0 : product.imageSlug,
     className: inputClassName
-  }));
+  }))), /* @__PURE__ */ import_react19.default.createElement("button", {
+    type: "submit",
+    name: "intent",
+    value: "update",
+    className: "m-5 rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300",
+    disabled: isUpdating
+  }, isUpdating ? "Updating..." : "Update Post")));
 }
 
 // app/routes/admin/new-product.jsx
 var new_product_exports = {};
 __export(new_product_exports, {
-  action: () => action4,
+  action: () => action5,
   default: () => Newproduct
 });
 var import_react20 = require("@remix-run/react"), import_react21 = __toESM(require("react"));
-var import_node12 = require("@remix-run/node");
-var action4 = async ({ request }) => {
+var import_node13 = require("@remix-run/node");
+var action5 = async ({ request }) => {
   let formData = await request.formData(), name = formData.get("name"), imageSlug = formData.get("imageSlug");
-  return await createProduct({ name, imageSlug }), (0, import_node12.redirect)("/admin");
+  return await createProduct({ name, imageSlug }), (0, import_node13.redirect)("/admin");
 };
 function Newproduct() {
   let transition = (0, import_react20.useTransition)(), isCreating = Boolean(transition.submission);
@@ -1455,20 +1475,20 @@ function Newproduct() {
 // app/routes/admin/$pointId.jsx
 var pointId_exports = {};
 __export(pointId_exports, {
-  action: () => action5,
+  action: () => action6,
   default: () => PointsDetailPage,
   loader: () => loader11
 });
-var import_node13 = require("@remix-run/node"), import_react22 = require("@remix-run/react");
+var import_node14 = require("@remix-run/node"), import_react22 = require("@remix-run/react");
 var loader11 = async ({ request, params }) => {
   let point = await getPoint({ id: parseInt(params.pointId) });
-  return (0, import_node13.json)({ point });
-}, action5 = async ({ request, params }) => {
+  return (0, import_node14.json)({ point });
+}, action6 = async ({ request, params }) => {
   let formData = await request.formData(), id = parseInt(params.pointId);
   if (formData.get("intent") === "delete")
-    return await deletePoint(parseInt(params.pointId)), (0, import_node13.redirect)("/admin");
+    return await deletePoint(parseInt(params.pointId)), (0, import_node14.redirect)("/admin");
   let name = formData.get("name"), adress = formData.get("adress"), tel = formData.get("tel");
-  return await updatePoint({ id, name, adress, tel }), (0, import_node13.redirect)("/admin");
+  return await updatePoint({ id, name, adress, tel }), (0, import_node14.redirect)("/admin");
 };
 function PointsDetailPage() {
   var _a, _b;
@@ -1539,11 +1559,11 @@ function Index() {
 // app/routes/admin/new.jsx
 var new_exports2 = {};
 __export(new_exports2, {
-  action: () => action6,
+  action: () => action7,
   default: () => New
 });
-var import_react23 = require("@remix-run/react"), import_node14 = require("@remix-run/node");
-var action6 = async ({ request }) => {
+var import_react23 = require("@remix-run/react"), import_node15 = require("@remix-run/node");
+var action7 = async ({ request }) => {
   let formData = await request.formData(), name = formData.get("name"), adress = formData.get("adress"), city = formData.get("city");
   console.log(city, "city");
   let tel = formData.get("tel"), errors = {
@@ -1552,7 +1572,7 @@ var action6 = async ({ request }) => {
     city: city ? null : "city is required",
     tel: tel ? null : "tel is required"
   };
-  return Object.values(errors).some((errorMessage) => errorMessage) ? (0, import_node14.json)(errors) : (await createPoint({ name, adress, city, tel }), (0, import_node14.redirect)("/admin"));
+  return Object.values(errors).some((errorMessage) => errorMessage) ? (0, import_node15.json)(errors) : (await createPoint({ name, adress, city, tel }), (0, import_node15.redirect)("/admin"));
 };
 function New() {
   let errors = (0, import_react23.useActionData)(), transition = (0, import_react23.useTransition)(), isCreating = Boolean(transition.submission);
@@ -1728,30 +1748,30 @@ function Index2() {
 // app/routes/login.jsx
 var login_exports = {};
 __export(login_exports, {
-  action: () => action7,
+  action: () => action8,
   default: () => LoginPage,
   loader: () => loader12,
   meta: () => meta2
 });
-var import_node15 = require("@remix-run/node"), import_react25 = require("@remix-run/react"), React7 = __toESM(require("react"));
+var import_node16 = require("@remix-run/node"), import_react25 = require("@remix-run/react"), React7 = __toESM(require("react"));
 async function loader12({ request }) {
-  return await getUserId(request) ? (0, import_node15.redirect)("/") : (0, import_node15.json)({});
+  return await getUserId(request) ? (0, import_node16.redirect)("/") : (0, import_node16.json)({});
 }
-async function action7({ request }) {
+async function action8({ request }) {
   let formData = await request.formData(), email = formData.get("email"), password = formData.get("password"), redirectTo = safeRedirect(formData.get("redirectTo"), "/notes"), remember = formData.get("remember");
   if (!validateEmail(email))
-    return (0, import_node15.json)({ errors: { email: "Email is invalid", password: null } }, { status: 400 });
+    return (0, import_node16.json)({ errors: { email: "Email is invalid", password: null } }, { status: 400 });
   if (typeof password != "string" || password.length === 0)
-    return (0, import_node15.json)({ errors: { email: null, password: "Password is required" } }, { status: 400 });
+    return (0, import_node16.json)({ errors: { email: null, password: "Password is required" } }, { status: 400 });
   if (password.length < 8)
-    return (0, import_node15.json)({ errors: { email: null, password: "Password is too short" } }, { status: 400 });
+    return (0, import_node16.json)({ errors: { email: null, password: "Password is too short" } }, { status: 400 });
   let user = await verifyLogin(email, password);
   return user ? createUserSession({
     request,
     userId: user.id,
     remember: remember === "on",
     redirectTo
-  }) : (0, import_node15.json)({ errors: { email: "Invalid email or password", password: null } }, { status: 400 });
+  }) : (0, import_node16.json)({ errors: { email: "Invalid email or password", password: null } }, { status: 400 });
 }
 var meta2 = () => ({
   title: "Login"
@@ -1841,7 +1861,7 @@ __export(notes_exports, {
   default: () => NotesPage,
   loader: () => loader13
 });
-var import_node16 = require("@remix-run/node"), import_react26 = require("@remix-run/react");
+var import_node17 = require("@remix-run/node"), import_react26 = require("@remix-run/react");
 
 // app/models/note.server.js
 function getNote({ id, userId }) {
@@ -1879,7 +1899,7 @@ function deleteNote({ id, userId }) {
 // app/routes/notes.jsx
 async function loader13({ request }) {
   let userId = await requireUserId(request), noteListItems = await getNoteListItems({ userId });
-  return (0, import_node16.json)({ noteListItems });
+  return (0, import_node17.json)({ noteListItems });
 }
 function NotesPage() {
   let data = (0, import_react26.useLoaderData)(), user = useUser();
@@ -1921,22 +1941,22 @@ var noteId_exports = {};
 __export(noteId_exports, {
   CatchBoundary: () => CatchBoundary2,
   ErrorBoundary: () => ErrorBoundary2,
-  action: () => action8,
+  action: () => action9,
   default: () => NoteDetailsPage,
   loader: () => loader14
 });
-var import_node17 = require("@remix-run/node"), import_react27 = require("@remix-run/react"), import_tiny_invariant4 = __toESM(require("tiny-invariant"));
+var import_node18 = require("@remix-run/node"), import_react27 = require("@remix-run/react"), import_tiny_invariant4 = __toESM(require("tiny-invariant"));
 async function loader14({ request, params }) {
   let userId = await requireUserId(request);
   (0, import_tiny_invariant4.default)(params.noteId, "noteId not found");
   let note = await getNote({ userId, id: params.noteId });
   if (!note)
     throw new Response("Not Found", { status: 404 });
-  return (0, import_node17.json)({ note });
+  return (0, import_node18.json)({ note });
 }
-async function action8({ request, params }) {
+async function action9({ request, params }) {
   let userId = await requireUserId(request);
-  return (0, import_tiny_invariant4.default)(params.noteId, "noteId not found"), await deleteNote({ userId, id: params.noteId }), (0, import_node17.redirect)("/notes");
+  return (0, import_tiny_invariant4.default)(params.noteId, "noteId not found"), await deleteNote({ userId, id: params.noteId }), (0, import_node18.redirect)("/notes");
 }
 function NoteDetailsPage() {
   let data = (0, import_react27.useLoaderData)();
@@ -1979,18 +1999,18 @@ function NoteIndexPage() {
 // app/routes/notes/new.jsx
 var new_exports3 = {};
 __export(new_exports3, {
-  action: () => action9,
+  action: () => action10,
   default: () => NewNotePage
 });
-var import_node18 = require("@remix-run/node"), import_react29 = require("@remix-run/react"), React8 = __toESM(require("react"));
-async function action9({ request }) {
+var import_node19 = require("@remix-run/node"), import_react29 = require("@remix-run/react"), React8 = __toESM(require("react"));
+async function action10({ request }) {
   let userId = await requireUserId(request), formData = await request.formData(), title = formData.get("title"), body = formData.get("body");
   if (typeof title != "string" || title.length === 0)
-    return (0, import_node18.json)({ errors: { title: "Title is required", body: null } }, { status: 400 });
+    return (0, import_node19.json)({ errors: { title: "Title is required", body: null } }, { status: 400 });
   if (typeof body != "string" || body.length === 0)
-    return (0, import_node18.json)({ errors: { title: null, body: "Body is required" } }, { status: 400 });
+    return (0, import_node19.json)({ errors: { title: null, body: "Body is required" } }, { status: 400 });
   let note = await createNote({ title, body, userId });
-  return (0, import_node18.redirect)(`/notes/${note.id}`);
+  return (0, import_node19.redirect)(`/notes/${note.id}`);
 }
 function NewNotePage() {
   var _a, _b, _c, _d, _e, _f;
@@ -2040,25 +2060,25 @@ function NewNotePage() {
 // app/routes/join.jsx
 var join_exports = {};
 __export(join_exports, {
-  action: () => action10,
+  action: () => action11,
   default: () => Join,
   loader: () => loader15,
   meta: () => meta3
 });
-var import_node19 = require("@remix-run/node"), import_react30 = require("@remix-run/react"), React9 = __toESM(require("react"));
+var import_node20 = require("@remix-run/node"), import_react30 = require("@remix-run/react"), React9 = __toESM(require("react"));
 async function loader15({ request }) {
-  return await getUserId(request) ? (0, import_node19.redirect)("/") : (0, import_node19.json)({});
+  return await getUserId(request) ? (0, import_node20.redirect)("/") : (0, import_node20.json)({});
 }
-async function action10({ request }) {
+async function action11({ request }) {
   let formData = await request.formData(), email = formData.get("email"), password = formData.get("password"), redirectTo = safeRedirect(formData.get("redirectTo"), "/");
   if (!validateEmail(email))
-    return (0, import_node19.json)({ errors: { email: "Email is invalid", password: null } }, { status: 400 });
+    return (0, import_node20.json)({ errors: { email: "Email is invalid", password: null } }, { status: 400 });
   if (typeof password != "string" || password.length === 0)
-    return (0, import_node19.json)({ errors: { email: null, password: "Password is required" } }, { status: 400 });
+    return (0, import_node20.json)({ errors: { email: null, password: "Password is required" } }, { status: 400 });
   if (password.length < 8)
-    return (0, import_node19.json)({ errors: { email: null, password: "Password is too short" } }, { status: 400 });
+    return (0, import_node20.json)({ errors: { email: null, password: "Password is too short" } }, { status: 400 });
   if (await getUserByEmail(email))
-    return (0, import_node19.json)({
+    return (0, import_node20.json)({
       errors: {
         email: "A user already exists with this email",
         password: null
@@ -2145,7 +2165,7 @@ function Join() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "763e7406", entry: { module: "/build/entry.client-N4NDTYHF.js", imports: ["/build/_shared/chunk-DOGMSUO4.js", "/build/_shared/chunk-M4XHNU2Q.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-SZMEYKX6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin": { id: "routes/admin", parentId: "root", path: "admin", index: void 0, caseSensitive: void 0, module: "/build/routes/admin-BH2TGJCP.js", imports: ["/build/_shared/chunk-2KNOV7HM.js", "/build/_shared/chunk-EUZNRB6R.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/$pointId": { id: "routes/admin/$pointId", parentId: "routes/admin", path: ":pointId", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/$pointId-VTISNTOL.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/index": { id: "routes/admin/index", parentId: "routes/admin", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/admin/index-UDNGQ5Y5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/new": { id: "routes/admin/new", parentId: "routes/admin", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/new-RAK6U2IS.js", imports: ["/build/_shared/chunk-4NH7UC5G.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/new-product": { id: "routes/admin/new-product", parentId: "routes/admin", path: "new-product", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/new-product-ENS5CNNV.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/products/$productId": { id: "routes/admin/products/$productId", parentId: "routes/admin", path: "products/:productId", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/products/$productId-6WNYJZ2Z.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-Z2BSKLEY.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/iletisim": { id: "routes/iletisim", parentId: "root", path: "iletisim", index: void 0, caseSensitive: void 0, module: "/build/routes/iletisim-6RXWMLI2.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-L44QBPXZ.js", imports: ["/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-VPF5AAR3.js", imports: ["/build/_shared/chunk-WAFMEQME.js", "/build/_shared/chunk-QRGKP3W3.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-ABILZFJB.js", imports: ["/build/_shared/chunk-WAFMEQME.js", "/build/_shared/chunk-QRGKP3W3.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-4QZP3AYA.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-LACJDGN2.js", imports: ["/build/_shared/chunk-OQYTGSYT.js", "/build/_shared/chunk-QRGKP3W3.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/$noteId": { id: "routes/notes/$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/$noteId-LZIYUJRJ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !0, hasErrorBoundary: !0 }, "routes/notes/index": { id: "routes/notes/index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes/index-S2HZM6VO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/new": { id: "routes/notes/new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/new-LANBYVPJ.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$slug": { id: "routes/posts/$slug", parentId: "root", path: "posts/:slug", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$slug-DBDYLPD5.js", imports: ["/build/_shared/chunk-IBBWVID6.js", "/build/_shared/chunk-RNV55LFY.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/admin": { id: "routes/posts/admin", parentId: "root", path: "posts/admin", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/admin-CM4KJ36Z.js", imports: ["/build/_shared/chunk-RNV55LFY.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/admin/$slug": { id: "routes/posts/admin/$slug", parentId: "routes/posts/admin", path: ":slug", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/admin/$slug-JT3OARF4.js", imports: ["/build/_shared/chunk-ATHCWIFU.js", "/build/_shared/chunk-6QO2NZ6H.js", "/build/_shared/chunk-IBBWVID6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !0, hasErrorBoundary: !0 }, "routes/posts/admin/index": { id: "routes/posts/admin/index", parentId: "routes/posts/admin", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/posts/admin/index-YBYKWC4E.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/admin/new": { id: "routes/posts/admin/new", parentId: "routes/posts/admin", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/admin/new-OHD4F772.js", imports: ["/build/_shared/chunk-ATHCWIFU.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-XYJUV4QV.js", imports: ["/build/_shared/chunk-RNV55LFY.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/satis-noktalari": { id: "routes/satis-noktalari", parentId: "root", path: "satis-noktalari", index: void 0, caseSensitive: void 0, module: "/build/routes/satis-noktalari-KGIL6C6G.js", imports: ["/build/_shared/chunk-4NH7UC5G.js", "/build/_shared/chunk-EUZNRB6R.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/urunlerimiz": { id: "routes/urunlerimiz", parentId: "root", path: "urunlerimiz", index: void 0, caseSensitive: void 0, module: "/build/routes/urunlerimiz-YFGORCGV.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-763E7406.js" };
+var assets_manifest_default = { version: "672b2dd8", entry: { module: "/build/entry.client-N4NDTYHF.js", imports: ["/build/_shared/chunk-DOGMSUO4.js", "/build/_shared/chunk-M4XHNU2Q.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-SZMEYKX6.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin": { id: "routes/admin", parentId: "root", path: "admin", index: void 0, caseSensitive: void 0, module: "/build/routes/admin-BH2TGJCP.js", imports: ["/build/_shared/chunk-2KNOV7HM.js", "/build/_shared/chunk-EUZNRB6R.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/$pointId": { id: "routes/admin/$pointId", parentId: "routes/admin", path: ":pointId", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/$pointId-VTISNTOL.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/index": { id: "routes/admin/index", parentId: "routes/admin", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/admin/index-UDNGQ5Y5.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/new": { id: "routes/admin/new", parentId: "routes/admin", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/new-RAK6U2IS.js", imports: ["/build/_shared/chunk-4NH7UC5G.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/new-product": { id: "routes/admin/new-product", parentId: "routes/admin", path: "new-product", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/new-product-ENS5CNNV.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/admin/products/$productId": { id: "routes/admin/products/$productId", parentId: "routes/admin", path: "products/:productId", index: void 0, caseSensitive: void 0, module: "/build/routes/admin/products/$productId-WEN72PCK.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/healthcheck": { id: "routes/healthcheck", parentId: "root", path: "healthcheck", index: void 0, caseSensitive: void 0, module: "/build/routes/healthcheck-Z2BSKLEY.js", imports: void 0, hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/iletisim": { id: "routes/iletisim", parentId: "root", path: "iletisim", index: void 0, caseSensitive: void 0, module: "/build/routes/iletisim-6RXWMLI2.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-L44QBPXZ.js", imports: ["/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/join": { id: "routes/join", parentId: "root", path: "join", index: void 0, caseSensitive: void 0, module: "/build/routes/join-VPF5AAR3.js", imports: ["/build/_shared/chunk-WAFMEQME.js", "/build/_shared/chunk-QRGKP3W3.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-ABILZFJB.js", imports: ["/build/_shared/chunk-WAFMEQME.js", "/build/_shared/chunk-QRGKP3W3.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-4QZP3AYA.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes": { id: "routes/notes", parentId: "root", path: "notes", index: void 0, caseSensitive: void 0, module: "/build/routes/notes-LACJDGN2.js", imports: ["/build/_shared/chunk-OQYTGSYT.js", "/build/_shared/chunk-QRGKP3W3.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/$noteId": { id: "routes/notes/$noteId", parentId: "routes/notes", path: ":noteId", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/$noteId-LZIYUJRJ.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !0, hasErrorBoundary: !0 }, "routes/notes/index": { id: "routes/notes/index", parentId: "routes/notes", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/notes/index-S2HZM6VO.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/notes/new": { id: "routes/notes/new", parentId: "routes/notes", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/notes/new-LANBYVPJ.js", imports: void 0, hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/$slug": { id: "routes/posts/$slug", parentId: "root", path: "posts/:slug", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/$slug-DBDYLPD5.js", imports: ["/build/_shared/chunk-IBBWVID6.js", "/build/_shared/chunk-RNV55LFY.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/admin": { id: "routes/posts/admin", parentId: "root", path: "posts/admin", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/admin-CM4KJ36Z.js", imports: ["/build/_shared/chunk-RNV55LFY.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/admin/$slug": { id: "routes/posts/admin/$slug", parentId: "routes/posts/admin", path: ":slug", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/admin/$slug-JT3OARF4.js", imports: ["/build/_shared/chunk-ATHCWIFU.js", "/build/_shared/chunk-6QO2NZ6H.js", "/build/_shared/chunk-IBBWVID6.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !0, hasErrorBoundary: !0 }, "routes/posts/admin/index": { id: "routes/posts/admin/index", parentId: "routes/posts/admin", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/posts/admin/index-YBYKWC4E.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/admin/new": { id: "routes/posts/admin/new", parentId: "routes/posts/admin", path: "new", index: void 0, caseSensitive: void 0, module: "/build/routes/posts/admin/new-OHD4F772.js", imports: ["/build/_shared/chunk-ATHCWIFU.js", "/build/_shared/chunk-6QO2NZ6H.js"], hasAction: !0, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/posts/index": { id: "routes/posts/index", parentId: "root", path: "posts", index: !0, caseSensitive: void 0, module: "/build/routes/posts/index-XYJUV4QV.js", imports: ["/build/_shared/chunk-RNV55LFY.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/satis-noktalari": { id: "routes/satis-noktalari", parentId: "root", path: "satis-noktalari", index: void 0, caseSensitive: void 0, module: "/build/routes/satis-noktalari-KGIL6C6G.js", imports: ["/build/_shared/chunk-4NH7UC5G.js", "/build/_shared/chunk-EUZNRB6R.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/urunlerimiz": { id: "routes/urunlerimiz", parentId: "root", path: "urunlerimiz", index: void 0, caseSensitive: void 0, module: "/build/routes/urunlerimiz-YFGORCGV.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, url: "/build/manifest-672B2DD8.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", publicPath = "/build/", entry = { module: entry_server_exports }, routes = {
