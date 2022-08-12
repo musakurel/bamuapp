@@ -10,9 +10,14 @@ import {
 } from "@remix-run/react";
 import Nav from "~/nav";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
+import styles from './styles/app.css';
+
 import { getUser } from "./session.server";
 import { useLocation } from "react-router-dom";
 
+/* export const links = () => {
+  return [{ rel: "stylesheet", href: styles }];
+}; */
 export const links = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
 };
