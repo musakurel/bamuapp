@@ -34,6 +34,11 @@ export default function Admin() {
           </Link>
 
           <hr />
+          <Link to="new-product" className="block p-4 text-xl text-blue-500">
+            + Yeni Ürün
+          </Link>
+
+          <hr />
 
           {points.length === 0 ? (
             <p className="p-4">No points yet</p>
