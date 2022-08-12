@@ -1,15 +1,17 @@
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getPoints } from "~/models/point.server";
+import { getProducts } from "~/models/product.server";
 import { useUser } from "~/utils";
 export const loader = async () => {
   return json({
     points: await getPoints(),
+    products: await getProducts()
   });
 };
 export default function Admin() {
   const user = useUser();
-  const { points } = useLoaderData();
+  const { points, products } = useLoaderData();
   return (
     <div className="flex h-full min-h-screen flex-col">
       <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
@@ -55,6 +57,26 @@ export default function Admin() {
                     }}
                   >
                     📝 {point.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ol>
+          )}
+          {products.length === 0 ? (
+            <p className="p-4">No products yet</p>
+          ) : (
+            <ol>
+              {products.map((product) => (
+                <li key={product.id}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                    }
+                    to={{
+                      pathname: `products/${product.id}`,
+                    }}
+                  >
+                    📝 {product.name}
                   </NavLink>
                 </li>
               ))}
