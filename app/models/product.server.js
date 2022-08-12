@@ -14,3 +14,7 @@ export async function createProduct({ name, imageSlug }) {
 export async function updateProduct({id, name, imageSlug }) {
   return prisma.product.update({where:{id}, data: { name, imageSlug } });
 }
+
+export async function deleteProduct({id}){
+    return prisma.product.delete({where:{id}})
+}
