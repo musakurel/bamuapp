@@ -1,7 +1,18 @@
-# Welcome to Remix!
+
+![Screen Shot 2022-08-14 at 23.07.47.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1660507687012/uvJpsg1Vg.png align="left")
+
+
+# Made with Remix!
 
 - [Remix Docs](https://remix.run/docs)
 - [Netlify Functions](https://www.netlify.com/products/functions/)
+- This is my first Remix.run project! Made with Remix and Prisma ORM.
+
+## Story
+- My family produces hot chili sauces and they want me to do a new simple website for them and I decided to do it with Remix since I was wondering about it for a long time and wanted to give it a shot!
+
+
+![Screen Shot 2022-08-14 at 23.14.02.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1660508062368/gTnnQVnND.png align="left")
 
 ## Netlify Setup
 
@@ -60,3 +71,5 @@ netlify deploy --build
 # production deployment
 netlify deploy --build --prod
 ```
+
+

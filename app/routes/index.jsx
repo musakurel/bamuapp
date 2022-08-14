@@ -40,14 +40,7 @@ export default function Index() {
               </div>
               <div className="relative m-40 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pb-20 lg:pt-32">
                 <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                  (
-                  <Link
-                    to="/notes"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
-                  >
-                    View Notes for {user?.email}
-                  </Link>
-                  )
+                
                 </div>
               </div>
             </div>
