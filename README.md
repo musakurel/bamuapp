@@ -1,5 +1,5 @@
 
-![Screen Shot 2022-08-14 at 23.07.47.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1660507687012/uvJpsg1Vg.png align="left")
+![Screen Shot 2022-08-14 at 23.07.47.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1660507687012/uvJpsg1Vg.png)
 
 
 # Made with Remix!
@@ -12,7 +12,7 @@
 - My family produces hot chili sauces and they want me to do a new simple website for them and I decided to do it with Remix since I was wondering about it for a long time and wanted to give it a shot!
 
 
-![Screen Shot 2022-08-14 at 23.14.02.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1660508062368/gTnnQVnND.png align="left")
+![Screen Shot 2022-08-14 at 23.14.02.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1660508062368/gTnnQVnND.png)
 
 ## Netlify Setup
 
