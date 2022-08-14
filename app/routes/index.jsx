@@ -52,11 +52,7 @@ export default function Index() {
               </div>
             </div>
           </div>
-          <div className="mx-auto mt-6 max-w-7xl text-center">
-            <Link to="/posts" className="text-xl text-blue-600 underline">
-              Blog Posts
-            </Link>
-          </div>
+
           <div className="mx-auto max-w-7xl py-2 px-4 sm:px-6 lg:px-8">
             <h4 className="text-center">Bazı Müşterilerimiz</h4>
             <div className="mt-6 flex flex-wrap justify-center gap-8">
@@ -105,6 +101,44 @@ export default function Index() {
           </div>
         </div>
       </main>
+      <div class="mx-auto grid max-w-7xl grid-cols-2 items-center gap-4 py-20 px-10 sm:px-6 lg:px-8">
+        <div>
+          <img class="w-full rounded-lg" src="/M3-1024x1024.jpeg" />
+        </div>
+        <div class="mx-auto p-5">
+          <h5 class=" mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Mutfağınızın vazgeçilmezi: Tüm yemeklerde kullanabileceğiniz İsot
+            Kreması
+          </h5>
+
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Sulu yemeklerde, balık-tavuk ızgaralarda, çiğköftelerde,
+            makarnalarda vb. tüm yemeklerinizde İsot Kreması'nı rahatlıkla
+            kullanabilirsiniz. Salça kullanmanıza gerek kalmaz, muhteşem
+            karışımın verdiği lezzeti siz de tadın!
+          </p>
+        </div>{" "}
+        <div class="mx-auto p-5">
+          <h5 class=" mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Nasıl kullanabilirsiniz?
+          </h5>
+
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Kahvaltılarda ekmeğe sürerek, patates kızartmasının yanına sos
+            olarak, omlet yaparken salça ve baharat yerine tüketebilirsiniz.
+            Tavuk, Balık ve Ciğer ızgaraları soslamada kullanabilirsiniz. Salça
+            ve baharat kullandığınız tüm yemeklerinizde kullanabilirsiniz.(Fırın
+            yemekleri, Fasulye-nohut gibi sulu yemekler, kısır, makarna, bulgur
+            pilavı, mantı sosu vb. tüm yemeklerde) Çiğköfte yaparken
+            kullandığınızda başka hiçbir baharata veya salçaya gerek kalmaz.
+            Ayrıca yanında meze olarak da kullanabilirsiniz.{" "}
+          </p>
+        </div>{" "}
+        <div>
+          <img class="w-full rounded-lg" src="/M4-1024x1024.jpeg" />
+        </div>
+      </div>
+
       <div class="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {news.map((haber, index) => {
           return (
@@ -163,6 +197,48 @@ export default function Index() {
           </div>
         </section>
       </div>
+      <footer class="bg-white p-4 dark:bg-gray-800 md:p-8 lg:p-10">
+        <div class="mx-auto max-w-screen-xl text-center">
+          <a
+            href="#"
+            class="flex items-center justify-center text-2xl font-semibold text-gray-900 dark:text-white"
+          >
+            Bamu İsot Kreması
+          </a>
+          <ul class="mb-6 flex flex-wrap items-center justify-center text-gray-900 dark:text-white">
+            <li>
+              <a href="/satis-noktalari" class="mr-4 hover:underline md:mr-6 ">
+                Satış Noktaları
+              </a>
+            </li>
+            <li>
+              <a href="/urunlerimiz" class="mr-4 hover:underline md:mr-6">
+                Ürünlerimiz
+              </a>
+            </li>
+            <li>
+              <a href="/iletisim" class="mr-4 hover:underline md:mr-6 ">
+                İletişim
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://bamushop.com/"
+                class="mr-4 hover:underline md:mr-6"
+              >
+                Online Alışveriş
+              </a>
+            </li>
+          </ul>
+          <span class="text-sm text-gray-500 dark:text-gray-400 sm:text-center">
+            © 2021-2022{" "}
+            <a href="#" class="hover:underline">
+              Bamu
+            </a>
+            . Tüm hakları saklıdır.
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }
