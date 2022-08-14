@@ -42,16 +42,18 @@ export default function Admin() {
 
           <hr />
 
+                    <h4>Satış Noktaları</h4>
+          <hr />
           {points.length === 0 ? (
             <p className="p-4">No points yet</p>
-          ) : (
-            <ol>
+            ) : (
+              <ol>
               {points.map((point) => (
                 <li key={point.id}>
                   <NavLink
                     className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
+                    `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                  }
                     to={{
                       pathname: `${point.id}`,
                     }}
@@ -62,6 +64,8 @@ export default function Admin() {
               ))}
             </ol>
           )}
+          <h4>Ürünler</h4>
+<hr />
           {products.length === 0 ? (
             <p className="p-4">No products yet</p>
           ) : (
@@ -82,6 +86,11 @@ export default function Admin() {
               ))}
             </ol>
           )}
+
+
+
+
+          
         </div>
 
         <div className="flex-1 p-6">
